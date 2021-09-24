@@ -56,7 +56,7 @@ class GildedRoseTest {
     }
 
     @Test
-    public void brieQualityIncreasesToMaxOf50() {
+    public void brieQualityIncreasesToMaxOfFifty() {
         Item[] items = new Item[] { new Item("Aged Brie", 0, 50) };
         GildedRose app = new GildedRose(items);
         app.updateQuality();
@@ -76,12 +76,32 @@ class GildedRoseTest {
     }
 
     @Test
-    public void backstageIncreasesQualityWhenMoreThan10DaysSellIn() {
+    public void backstageIncreasesQualityWhenMoreThanTenDaysSellIn() {
         Item[] items = new Item[] { new Item("Backstage passes to a TAFKAL80ETC concert", 11, 20) };
         GildedRose app = new GildedRose(items);
         app.updateQuality();
         assertEquals("Backstage passes to a TAFKAL80ETC concert", app.items[0].name);
         assertEquals(10, app.items[0].sellIn);
         assertEquals(21, app.items[0].quality);
+    }
+
+    @Test
+    public void backstageIncreasesQualityWhenTenOrLessDaysSellIn() {
+        Item[] items = new Item[] { new Item("Backstage passes to a TAFKAL80ETC concert", 10, 20) };
+        GildedRose app = new GildedRose(items);
+        app.updateQuality();
+        assertEquals("Backstage passes to a TAFKAL80ETC concert", app.items[0].name);
+        assertEquals(9, app.items[0].sellIn);
+        assertEquals(22, app.items[0].quality);
+    }
+    @Test
+
+    public void backstageIncreasesQualityWhenFiveOrLessDaysSellIn() {
+        Item[] items = new Item[] { new Item("Backstage passes to a TAFKAL80ETC concert", 5, 20) };
+        GildedRose app = new GildedRose(items);
+        app.updateQuality();
+        assertEquals("Backstage passes to a TAFKAL80ETC concert", app.items[0].name);
+        assertEquals(4, app.items[0].sellIn);
+        assertEquals(23, app.items[0].quality);
     }
 }
